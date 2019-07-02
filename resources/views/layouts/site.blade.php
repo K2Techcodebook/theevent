@@ -1,5 +1,4 @@
 @include('sitelayout.header')
-  @include('sitelayout.nav')
 
     <!-- <div class="content-wrapper"> -->
     <!-- Main content -->

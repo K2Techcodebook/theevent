@@ -59,6 +59,8 @@
 
                 @elseif(checkPermission(['superadmin']))
 
+                    @elseif(checkPermission(['invaliduser']))
+
 
                 @else
                 I don't have any records!

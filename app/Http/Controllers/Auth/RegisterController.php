@@ -36,11 +36,8 @@ class RegisterController extends Controller
            $this->validate($request, [
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'first_name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
+            'name' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'country' => ['required', 'string'],
-            'state' => ['required', 'string'],
 
         ]);
 
@@ -54,22 +51,26 @@ class RegisterController extends Controller
     //         ]);
 
 
+    //is_permission
+    
+//Note Admin 1
+// Super admin 2
+//User 3
+//Invalid user 0
+
           User::create([
                 //   'user_id' => $user_id,
                    'username' => $request['username'],
                    'email' => $request['email'],
-                   'first_name' => $request['first_name'],
-                   'last_name' => $request['last_name'],
+                   'name' => $request['name'],
                     'ip_address' =>  request()->ip(),
                    'password' => Hash::make($request['password']),
-                   'country'  => $request['country'],
-                   'state' => $request['state'],
                    'is_permission'  => 0,
                    'token_balance' =>  0,
-               
+
                ]);
 
-               
+
              return redirect()->intended('login');
 
 

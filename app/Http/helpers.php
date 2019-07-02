@@ -21,8 +21,11 @@
       case 2:
         return 'superadmin';
         break;
+        case 3:
+          return 'user';
+          break;
       default:
-        return 'user';
+        return 'invaliduser';
         break;
     }
   }
