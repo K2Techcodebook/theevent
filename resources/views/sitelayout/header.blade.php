@@ -53,14 +53,17 @@
 
         {{ Auth::user()->username }}
             @if(checkPermission(['user']))
-
+  <li class="menu-active"><a href="#">Dashboard</a></li>
+    <li ><a href="#">Affilate Link</a></li>
               @elseif(checkPermission(['admin']))
-
-
+  <li class="menu-active"><a href="#">Dashboard</a></li>
+  <li ><a href="#">Delete Videos</a></li>
+    <li ><a href="#">Upload Videos</a></li>
+      <li ><a href="#">Verify Users</a></li>
                 @elseif(checkPermission(['superadmin']))
 
                     @elseif(checkPermission(['invaliduser']))
-
+  <li ><a href="#">Select Package</a></li>
 
                 @else
                 I don't have any records!

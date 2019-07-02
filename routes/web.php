@@ -31,7 +31,7 @@ Route::get('/clear-cache', function() {
 Route::post('/register_new_user', 'Auth\RegisterController@createAffiliate')->name('register_new_user');
 
 Route::post('/login', 'Auth\LoginController@affiliateLogin')->name('log_affiliate');
-
+Route::post('/package', 'TokenPlansController@createPackage')->name('log_package');
 
 
 
