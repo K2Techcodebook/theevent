@@ -47,16 +47,11 @@
       <ul class="nav-menu">
         <li class="menu-active"><a href="#intro">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#speakers">Speakers</a></li>
-        <li><a href="#schedule">Schedule</a></li>
-        <li><a href="#venue">Venue</a></li>
-        <li><a href="#hotels">Hotels</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#supporters">Sponsors</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#speakers">Service</a></li>
+        <li><a href="#schedule">upcoming events</a></li>
             @auth
-        <li class="buy-tickets"><a href="#buy-tickets">Buy Tickets</a></li>
-          <p class="user-name">{{ Auth::user()->username }}</p>
+
+        {{ Auth::user()->username }}
             @if(checkPermission(['user']))
 
               @elseif(checkPermission(['admin']))
@@ -72,10 +67,9 @@
 
 
 @unless (Auth::check())
-<div class="account-actions">
-    <a href="{{ route('register') }}" class="button primary">Register</a>
-    <a href="{{ route('login') }}" class="button secondary">Login</a>
-</div>
+    <li>  <a href="{{ route('register') }}" class="button primary">Register</a>  </li>
+    <li>  <a href="{{ route('login') }}" class="button secondary">Login</a>  </li>
+
 
 
 @endunless
@@ -84,3 +78,8 @@
     </nav><!-- #nav-menu-container -->
   </div>
 </header><!-- #header -->
+
+
+   <!--==========================
+       Intro Section
+     ============================-->
