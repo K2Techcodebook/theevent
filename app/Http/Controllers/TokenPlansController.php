@@ -45,9 +45,14 @@ if($request['ticket-type'] =='standard-access')
 
   ]);
   $message ='Post has been successfully added!';
-    return redirect()->back()->with('status', $message);
+    return redirect()->intended('payment')->with('status', $message);
 }
 
+
+public function payment()
+{
+return view('pages.payment');
+}
 
 
 

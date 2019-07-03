@@ -38,6 +38,12 @@ Route::group(['middleware'=>'auth'], function () {
 
   Route::get('/package', 'TokenPlansController@index')->name('package');
   Route::post('/UserPackage', 'TokenPlansController@createPackage')->name('UserPackage');
+  Route::get('/payment', 'TokenPlansController@payment')->name('payment');
+
+
+
+
+
 
 Route::post('/updateProfile', 'HomeController@updateProfile')->name('updateProfile');
 Route::post('/uploadItem', 'ItemsController@uploadItem')->name('uploadItem');
