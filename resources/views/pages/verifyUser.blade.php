@@ -1,7 +1,3 @@
-
-
-
-
 @extends('layouts.site')
 
 @section('title') Verfiy User @endsection

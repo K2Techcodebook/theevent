@@ -86,4 +86,10 @@ $message ='Post has been successfully added!';
 return redirect()->back()->with('status', $message);
 }
 
+public function videoUpload()
+{
+  return view('pages.videoUpload');
+}
+
+
 }

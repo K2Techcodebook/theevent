@@ -64,7 +64,7 @@
 
     <li class="menu-active"><a href="#">Dashboard</a></li>
     <li ><a href="#">Delete Videos</a></li>
-      <li ><a href="#">Upload Videos</a></li>
+      <li ><a href="{{ route('videoUpload') }}">Upload Videos</a></li>
         <li ><a href="{{ route('verifyUser') }}">Verify Users</a></li>
 
                     @elseif(checkPermission(['invaliduser']))

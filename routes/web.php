@@ -41,6 +41,7 @@ Route::group(['middleware'=>'auth'], function () {
   Route::get('/payment', 'TokenPlansController@payment')->name('payment');
   //super admin
 	Route::get('verifyUser',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@verifyUser'])->name('verifyUser');
+  	Route::get('videoUpload',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@videoUpload'])->name('videoUpload');
 Route::get('/activate/{id?}',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@activateUser'])->name('activate');
 
 
