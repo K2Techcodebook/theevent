@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\items;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -68,5 +69,12 @@ public function load_items($name,$id)
  return view('pages.viewitems', compact('items',$items,'name'));
 }
 
+
+public function verifyUser()
+{
+  $items = user::where('is_permission','=','0')->get();
+
+return view('pages.verifyUser', compact('items',$items));
+}
 
 }

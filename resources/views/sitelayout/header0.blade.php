@@ -58,11 +58,14 @@
   <li class="menu-active"><a href="#">Dashboard</a></li>
     <li ><a href="#">Affilate Link</a></li>
               @elseif(checkPermission(['admin']))
-  <li class="menu-active"><a href="#">Dashboard</a></li>
-  <li ><a href="#">Delete Videos</a></li>
-    <li ><a href="#">Upload Videos</a></li>
-      <li ><a href="#">Verify Users</a></li>
+
+
                 @elseif(checkPermission(['superadmin']))
+
+    <li class="menu-active"><a href="#">Dashboard</a></li>
+    <li ><a href="#">Delete Videos</a></li>
+      <li ><a href="#">Upload Videos</a></li>
+        <li ><a href="{{ route('verifyUser') }}">Verify Users</a></li>
 
                     @elseif(checkPermission(['invaliduser']))
   <li ><a href="{{route('package')}}">Select Package</a></li>
