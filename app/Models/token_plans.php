@@ -12,6 +12,6 @@ class token_plans extends Model
    * @var array
    */
   protected $fillable = [
-      'id','name', 'price', 'total_token'
+      'id','packagename', 'price', 'username','email','price'
   ];
 }

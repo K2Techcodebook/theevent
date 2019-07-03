@@ -31,11 +31,13 @@ Route::get('/clear-cache', function() {
 Route::post('/register_new_user', 'Auth\RegisterController@createAffiliate')->name('register_new_user');
 
 Route::post('/login', 'Auth\LoginController@affiliateLogin')->name('log_affiliate');
-Route::post('/package', 'TokenPlansController@createPackage')->name('log_package');
 
 
 
 Route::group(['middleware'=>'auth'], function () {
+
+  Route::get('/package', 'TokenPlansController@index')->name('package');
+  Route::post('/UserPackage', 'TokenPlansController@createPackage')->name('UserPackage');
 
 Route::post('/updateProfile', 'HomeController@updateProfile')->name('updateProfile');
 Route::post('/uploadItem', 'ItemsController@uploadItem')->name('uploadItem');

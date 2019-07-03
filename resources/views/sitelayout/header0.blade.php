@@ -51,7 +51,9 @@
         <li><a href="#schedule">upcoming events</a></li> -->
             @auth
 
-        {{ Auth::user()->username }}
+  <li>
+    <a href="{{ route('dashboard') }}"> Welcome    {{ Auth::user()->username }}</a>
+  </li>
             @if(checkPermission(['user']))
   <li class="menu-active"><a href="#">Dashboard</a></li>
     <li ><a href="#">Affilate Link</a></li>
@@ -63,7 +65,7 @@
                 @elseif(checkPermission(['superadmin']))
 
                     @elseif(checkPermission(['invaliduser']))
-  <li ><a href="#">Select Package</a></li>
+  <li ><a href="{{route('package')}}">Select Package</a></li>
 
                 @else
                 I don't have any records!
