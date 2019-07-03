@@ -1,18 +1,9 @@
-@include('sitelayout.header')
-
-    <!-- <div class="content-wrapper"> -->
-    <!-- Main content -->
-         <!-- <section class="content"> -->
+@include('sitelayout.header0')
 
        @yield('content')
-       <!-- About Section -->
 
-    <!-- <section id="profile" class="signup-section">
-    </section> -->
          @yield('footer')
-      <!-- </section>
-    </div>
-    <br> -->
+
 
   @include('sitelayout.footer')
 

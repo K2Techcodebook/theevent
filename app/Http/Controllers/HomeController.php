@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\items;
 use App\User;
+use DB;
 
 class HomeController extends Controller
 {
@@ -72,9 +73,17 @@ public function load_items($name,$id)
 
 public function verifyUser()
 {
-  $items = user::where('is_permission','=','0')->get();
+  $data = user::where('is_permission','=','0')->get();
 
-return view('pages.verifyUser', compact('items',$items));
+return view('pages.verifyUser', compact('data',$data));
+}
+
+public function activateUser($id)
+{
+$is_permission=3;
+DB::update('update users set is_permission = ? where id = ?',[$is_permission,$id]);
+$message ='Post has been successfully added!';
+return redirect()->back()->with('status', $message);
 }
 
 }

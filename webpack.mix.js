@@ -15,6 +15,7 @@ const mix = require('laravel-mix');
 //    .sass('resources/sass/app.scss', 'public/css');
 mix.styles([
     'public/lib/bootstrap/css/bootstrap.min.css',
+    'public/lib/bootstrap/css/dataTables.bootstrap4.min.css',
     'public/lib/animate/animate.min.css',
     'public/lib/venobox/venobox.css',
     'public/lib/owlcarousel/assets/owl.carousel.min.css',
@@ -23,6 +24,8 @@ mix.styles([
      'public/css/all.css');
 mix.scripts([
     'public/lib/jquery/jquery.min.js',
+    'public/lib/bootstrap/js/jquery.dataTables.min.js',
+    'public/lib/bootstrap/js/dataTables.bootstrap4.min.js',
    'public/lib/jquery/jquery-migrate.min.js',
    'public/lib/bootstrap/js/bootstrap.bundle.min.js',
    'public/lib/easing/easing.min.js',

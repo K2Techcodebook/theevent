@@ -121,7 +121,7 @@
 
 
    </main>
-
+ @endsection
       @yield('footer')
 
 
