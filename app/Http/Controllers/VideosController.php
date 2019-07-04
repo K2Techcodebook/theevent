@@ -97,8 +97,16 @@ class VideosController extends Controller
      * @param  \App\Models\videos  $videos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(videos $videos)
+    public function destroy($id)
     {
+
+      $data = videos::FindOrFail($id);
+     if(file_exists($data->url)){
+           unlink($data->url);
+        }
+        // $parentExists=videos::where('id',$id)->exists();
+        //  if ($barcodeNumberExists > 0) {
         //
+        //  }
     }
 }

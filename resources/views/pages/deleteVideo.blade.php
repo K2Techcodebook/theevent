@@ -56,7 +56,7 @@
        					<td>{{$item->extention}}</td>
                 <td>{{$user->name}}</td>
                 <td>{{$item->created_at}}</td>
-       				<td><a href = 'activate/{{ $item->id }}'>Activate</a></td>
+       				<td><a href = 'deletefile/{{ $item->id }}'>Delete</a></td>
        				</tr>
        				@endforeach
          </table>
