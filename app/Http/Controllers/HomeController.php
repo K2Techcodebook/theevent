@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\items;
+use App\Models\videos;
 use App\User;
 use DB;
 use App\Http\Requests\VideoUploadRequest;
@@ -96,6 +97,7 @@ public function videoUpload()
 }
 
 public function Update_video(Request $request){
+    // $user =new videos;
              $data=$request->all();
               $rules=[
                  'name' => 'required',
@@ -108,6 +110,8 @@ public function Update_video(Request $request){
                              ->withErrors($validator)
                              ->withInput();
              }else{
+
+
                $videoName = $request['name'].'.'.request()->video->getClientOriginalExtension();
                 $videoPath = env('APP_URL').'/public/videos/'.$videoName;
 
@@ -130,16 +134,14 @@ public function Update_video(Request $request){
                        Storage::delete($old_filename);
                    }
                  }
-                      // $video=$data['video'];
-                        // $input = $request['username'].'.'.$video->getClientOriginalExtension();
-                        // $destinationPath = 'public/videos';
-                        // $video->move($destinationPath, $input);
 
-                            // $user['video']       =$input;
-                            // $user['created_at']  =date('Y-m-d h:i:s');
-                            // $user['updated_at']  =date('Y-m-d h:i:s');
-                            // $user['user_id']     =session('user_id');
-                          //  DB::table('user_videos')->insert($user);
+                            $user['filename']       =$videoName;
+                            $user['created_at']  =date('Y-m-d h:i:s');
+                            $user['updated_at']  =date('Y-m-d h:i:s');
+                            $user['url']  =$videoPath;
+                            $user['extention']  =request()->video->getClientOriginalExtension();
+                            $user['user_id']     =auth()->user()->id;
+                           DB::table('videos')->insert($user);
                           $message ='Account has been successfully updated!';
                         return redirect()->back()->with('status', $message);
                     }
