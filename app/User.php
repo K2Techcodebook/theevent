@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function videos()
    {
-       return $this->hasMany('App\Models\videos','user_id','user_id');
+       return $this->hasMany('App\Models\videos');
    }
 
 

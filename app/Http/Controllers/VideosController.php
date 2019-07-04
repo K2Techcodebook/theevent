@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use DB;
 use App\Models\videos;
 use Illuminate\Http\Request;
 
 class VideosController extends Controller
 {
+
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,13 @@ class VideosController extends Controller
      */
     public function index()
     {
-        //
+      $id=auth()->user()->id;
+      $user = User::find($id);
+   $data = $user->videos()->get();
+
+      // var_dump($data);
+      //$data = videos::all();
+      return view('pages.deleteVideo', compact('data',$data,"user", $user));
     }
 
     /**

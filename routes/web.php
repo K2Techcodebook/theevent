@@ -42,6 +42,7 @@ Route::group(['middleware'=>'auth'], function () {
   //super admin
 	Route::get('verifyUser',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@verifyUser'])->name('verifyUser');
   Route::get('videoUpload',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@videoUpload'])->name('videoUpload');
+  Route::get('videoDelete',['middleware'=>'check-permission:superadmin','uses'=>'VideosController@index'])->name('videoDelete');
   Route::post('Update_video',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@Update_video'])->name('Update_video');
   Route::get('/activate/{id?}',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@activateUser'])->name('activate');
 
