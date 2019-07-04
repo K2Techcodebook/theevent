@@ -3,7 +3,11 @@
 @section('title') Upload video @endsection
   @section('content')
 
+<?php
 
+//echo phpinfo();
+
+?>
 
   <br><br>
   <!--==========================
@@ -12,46 +16,44 @@
   <section id="contact" class="section-bg wow fadeInUp">
 
     <div class="container">
+      <div class="col-lg-10 col-lg-offset-2">
+                      @if (session('status'))
 
+                                    <div class="alert alert-success">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
+                                @if (count($errors) > 0)
+                                    @foreach ($errors->all() as $error)
+
+                                        <div class="alert alert-danger">{{ $error }}</div>
+
+                                    @endforeach
+
+                                @endif
+
+
+                      </div>
       <div class="section-header">
-       <h2>Registration</h2>
+       <h2>Video Upload</h2>
       </div>
 
 
       <div class="form">
-        <form   method="POST" action="{{route('register_new_user') }}" aria-label="{{ __('Register') }}">
-          @csrf
-            <div class="form-group">
-            <input type="text"  class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" placeholder="Enter your username here...">
-
-            @if ($errors->has('username'))
-            <span class="invalid-feedback" role="alert">
-              <strong style="color:red">{{ $errors->first('username') }}</strong>
-            </span>
-            <br/>
-            <br/>
-            @endif
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <div class="file-field">
-          <div class="btn btn-primary btn-sm float-left">
-            <span>Choose file</span>
-            <input type="file">
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Upload your file">
-          </div>
-        </div>
-            </div>
-            <div class="form-group col-md-6">
-              <input type="password"  name="password_confirmation" class="form-control" placeholder="Repeat your password here...">
-              <div class="validation"></div>
-            </div>
-          </div>
-
-          <div class="text-center"><button type="submit">{{ __('Register') }}<span class="primary">Now!</span></button></div>
-        </form>
+        {!! Form::open(['method' => 'post','class'=>'form-horizontal','url' => 'Update_video','files'=>true])!!}
+        <!-- <form action="{{ route('Update_video') }}" method="post" enctype="multipart/form-data"> -->
+{{ csrf_field() }}
+<div class="form-group">
+<label for="Product Name">Product Name</label>
+<input type="text" name="name" class="form-control"  placeholder="Product Name" >
+</div>
+<label for="Product Name">Product photos (can attach more than one):</label>
+<br />
+<input type="file" class="form-control" name="video" />
+<br /><br />
+  <div class="text-center"><button type="submit">{{ __('Upload') }}<span class="primary"> Now!</span></button></div>
+<!-- </form> -->
+{!!Form::close()!!}
       </div>
 
     </div>

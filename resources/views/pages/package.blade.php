@@ -1,5 +1,5 @@
 @include('sitelayout.header0')
-@section('title') Package @endsection
+
    @yield('content')
 
    <main id="main">
@@ -121,7 +121,7 @@
 
 
    </main>
- @endsection
+
       @yield('footer')
 
 

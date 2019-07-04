@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\items;
 use App\User;
 use DB;
+use App\Http\Requests\VideoUploadRequest;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
@@ -90,6 +94,54 @@ public function videoUpload()
 {
   return view('pages.videoUpload');
 }
+
+public function Update_video(Request $request){
+             $data=$request->all();
+              $rules=[
+                 'name' => 'required',
+                'video'          =>'mimes:jpeg,jpg,mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts,zip,pdf|max:100040|required'];
+             $validator = Validator($data,$rules);
+//dd($validator);
+             if ($validator->fails()){
+                 return redirect()
+                             ->back()
+                             ->withErrors($validator)
+                             ->withInput();
+             }else{
+
+                        $video=$data['video'];
+                        $input = time().'.'.$video->getClientOriginalExtension();
+                        $destinationPath = 'uploads/videos';
+                        $video->move($destinationPath, $input);
+
+                            $user['video']       =$input;
+                            $user['created_at']  =date('Y-m-d h:i:s');
+                            $user['updated_at']  =date('Y-m-d h:i:s');
+                            $user['user_id']     =session('user_id');
+                          //  DB::table('user_videos')->insert($user);
+                           return redirect()->back()->with('status','upload_success');
+                    }
+}
+
+// public function Update_video(Request $request)
+// {
+//
+//   return $request->file('video');
+//   //  // Coming soon...
+//   //  $product = Product::create($request->all());
+//   //  // foreach ($request->photos as $photo) {
+// // dd($request->file('video'));
+// // dd(Input::file('image'));
+//     // $uniqueFileName = uniqid() . '.' . $request->file('video')->getClientOriginalExtension();
+//     // Storage::disk('local')->put('videos', $request->file('video'));
+//
+//     // ProductsPhoto::create([
+//     //     'product_id' => $product->id,
+//     //     'filename' => $uniqueFileName
+//     // ]);
+//
+// // return redirect()->back()->with('status','Upload successful!');
+//     }
 
 
 }
