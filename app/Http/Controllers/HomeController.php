@@ -99,7 +99,7 @@ public function Update_video(Request $request){
              $data=$request->all();
               $rules=[
                  'name' => 'required',
-                'video'          =>'mimes:jpeg,jpg,mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts,zip,pdf|max:100040|required'];
+                'video'          =>'mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:100040|required'];
              $validator = Validator($data,$rules);
 //dd($validator);
              if ($validator->fails()){
@@ -108,18 +108,40 @@ public function Update_video(Request $request){
                              ->withErrors($validator)
                              ->withInput();
              }else{
+               $videoName = $request['name'].'.'.request()->video->getClientOriginalExtension();
+                $videoPath = env('APP_URL').'/public/videos/'.$videoName;
 
-                        $video=$data['video'];
-                        $input = time().'.'.$video->getClientOriginalExtension();
-                        $destinationPath = 'uploads/videos';
-                        $video->move($destinationPath, $input);
+                $file = $request->file('video');
+                if(isset($videoName)) {
+                 $filename = $videoName;
+                    $old_filename= $videoName;
+                 //  $filename = $request['username'] . '-' . $user->id . '.jpg';
+                  // $old_filename = $old_name . '-' . $user->id . '.jpg';
+                   $update = false;
+                   if (Storage::disk('public')->has($old_filename)) {
+                       $old_file = Storage::disk('public')->get($old_filename);
+                       Storage::disk('public')->put($filename, $old_file);
+                       $update = true;
+                   }
+                   if ($file) {
+                       Storage::disk('public')->put($filename, File::get($file));
+                   }
+                   if ($update && $old_filename !== $filename) {
+                       Storage::delete($old_filename);
+                   }
+                 }
+                      // $video=$data['video'];
+                        // $input = $request['username'].'.'.$video->getClientOriginalExtension();
+                        // $destinationPath = 'public/videos';
+                        // $video->move($destinationPath, $input);
 
-                            $user['video']       =$input;
-                            $user['created_at']  =date('Y-m-d h:i:s');
-                            $user['updated_at']  =date('Y-m-d h:i:s');
-                            $user['user_id']     =session('user_id');
+                            // $user['video']       =$input;
+                            // $user['created_at']  =date('Y-m-d h:i:s');
+                            // $user['updated_at']  =date('Y-m-d h:i:s');
+                            // $user['user_id']     =session('user_id');
                           //  DB::table('user_videos')->insert($user);
-                           return redirect()->back()->with('status','upload_success');
+                          $message ='Account has been successfully updated!';
+                        return redirect()->back()->with('status', $message);
                     }
 }
 
