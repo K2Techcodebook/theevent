@@ -101,12 +101,30 @@ class VideosController extends Controller
     {
 
       $data = videos::FindOrFail($id);
+
+      $destinationPath =storage_path().'/app/public/videos/'.$data->filename;
+//       $abspath=$_SERVER['DOCUMENT_ROOT'];
+// dd($abspath);
+//dd($destinationPath);
      if(file_exists($data->url)){
-           unlink($data->url);
+           unlink($destinationPath);
         }
-        // $parentExists=videos::where('id',$id)->exists();
-        //  if ($barcodeNumberExists > 0) {
-        //
-        //  }
+
+             try{
+
+                 $data->delete();
+                 $bug = 0;
+             }
+             catch(\Exception $e){
+                 $bug = $e->errorInfo[1];
+             }
+             if($bug==0){
+                 unlink($destinationPath);
+                 $message ='Account has been successfully updated!';
+               return redirect()->back()->with('status', $message);
+             }else{
+               $message ='Account has been unsuccessfully Deleted!';
+             return redirect()->back()->with('status', $message);
+             }
     }
 }
