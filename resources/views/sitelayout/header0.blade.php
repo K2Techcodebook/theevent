@@ -52,7 +52,7 @@
             @auth
 
   <li>
-    <a href="{{ route('dashboard') }}"> Welcome    {{ Auth::user()->username }}</a>
+    <a href="{{ url('/') }}"> Welcome    {{ Auth::user()->username }}</a>
   </li>
             @if(checkPermission(['user']))
   <li class="menu-active"><a href="#">Dashboard</a></li>

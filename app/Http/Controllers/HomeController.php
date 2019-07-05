@@ -229,7 +229,12 @@ public function Update_video(Request $request){
                {
                 return view('pages.control');
                }
-
+              public function welcomehome()
+              {
+                $data = About::all();
+                $data2 = Service::all();
+                return view('welcome', compact('data',$data,'data2',$data2));
+              }
 
 
 }
