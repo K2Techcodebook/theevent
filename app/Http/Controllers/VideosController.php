@@ -103,13 +103,6 @@ class VideosController extends Controller
       $data = videos::FindOrFail($id);
 
       $destinationPath =storage_path().'/app/public/videos/'.$data->filename;
-//       $abspath=$_SERVER['DOCUMENT_ROOT'];
-// dd($abspath);
-//dd($destinationPath);
-     if(file_exists($data->url)){
-           unlink($destinationPath);
-        }
-
              try{
 
                  $data->delete();

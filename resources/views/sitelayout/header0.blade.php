@@ -62,10 +62,11 @@
 
                 @elseif(checkPermission(['superadmin']))
 
-    <li class="menu-active"><a href="#">Dashboard</a></li>
+    <li class="menu-active"><a href="{{ route('dashboard') }}">Dashboard</a></li>
     <li ><a href="{{ route('videoDelete') }}">Delete Videos</a></li>
       <li ><a href="{{ route('videoUpload') }}">Upload Videos</a></li>
         <li ><a href="{{ route('verifyUser') }}">Verify Users</a></li>
+          <li ><a href="{{ route('control') }}">About | Service</a></li>
 
                     @elseif(checkPermission(['invaliduser']))
   <li ><a href="{{route('package')}}">Select Package</a></li>

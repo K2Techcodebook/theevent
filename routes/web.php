@@ -45,7 +45,10 @@ Route::group(['middleware'=>'auth'], function () {
   Route::get('videoDelete',['middleware'=>'check-permission:superadmin','uses'=>'VideosController@index'])->name('videoDelete');
   Route::post('Update_video',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@Update_video'])->name('Update_video');
   Route::get('/activate/{id?}',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@activateUser'])->name('activate');
-    Route::get('/deletefile/{id?}',['middleware'=>'check-permission:superadmin','uses'=>'VideosController@destroy'])->name('deletefile');
+  Route::get('/deletefile/{id?}',['middleware'=>'check-permission:superadmin','uses'=>'VideosController@destroy'])->name('deletefile');
+  Route::post('summernoteeditor',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@postSummernoteeditor'])->name('summernoteeditor');
+  	Route::get('control',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@control'])->name('control');
+  // Route::post('summernoteeditor',array('as'=>'summernoteeditor.post',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@postSummernoteeditor']));
 
 
 

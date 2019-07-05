@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\items;
 use App\Models\videos;
+use App\Models\About;
+use App\Models\Service;
 use App\User;
 use DB;
 use App\Http\Requests\VideoUploadRequest;
@@ -147,25 +149,87 @@ public function Update_video(Request $request){
                     }
 }
 
-// public function Update_video(Request $request)
-// {
-//
-//   return $request->file('video');
-//   //  // Coming soon...
-//   //  $product = Product::create($request->all());
-//   //  // foreach ($request->photos as $photo) {
-// // dd($request->file('video'));
-// // dd(Input::file('image'));
-//     // $uniqueFileName = uniqid() . '.' . $request->file('video')->getClientOriginalExtension();
-//     // Storage::disk('local')->put('videos', $request->file('video'));
-//
-//     // ProductsPhoto::create([
-//     //     'product_id' => $product->id,
-//     //     'filename' => $uniqueFileName
-//     // ]);
-//
-// // return redirect()->back()->with('status','Upload successful!');
-//     }
+               public function postSummernoteeditor(Request $request)  {
+                 $this->validate($request, [
+                           'detail' => 'required',
+                           'feature' => 'required',
+                       ]);
+                       $detail=$request->input('detail');
+                 $feature=$request->input('feature');
+                          if($request->input('ticket-type') == 'about'){
+
+                            $user = About::updateOrCreate(['user_id' => auth()->user()->id],
+                              ['title' => $feature,'user_id'=>auth()->user()->id, 'body' => $detail]);
+                              $message ='Account has been successfully updated!';
+                            return redirect()->back()->with('status', $message);
+                          }
+                          else {
+                            $dom = new \DomDocument();
+                            $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                            $images = $dom->getElementsByTagName('img');
+                            foreach($images as $k => $img){
+                                $data = $img->getAttribute('src');
+                                list($type, $data) = explode(';', $data);
+                                list(, $data)      = explode(',', $data);
+                                $data = base64_decode($data);
+                                $image_name= '/img/service/'.$feature.'.png';
+
+                                $path = public_path() . $image_name;
+
+                                file_put_contents($path, $data);
+
+                                $img->removeAttribute('src');
+
+                                $img->setAttribute('src', $image_name);
+                            }
+                            $user = Service::updateOrCreate(['title' => $feature],
+                              ['title' => $feature,'user_id'=>auth()->user()->id, 'body' => $image_name]);
+                            $detail = $dom->saveHTML();
+                            $message ='Account has been successfully updated!';
+                          return redirect()->back()->with('status', $message);
+                          }
+
+
+
+                                  // $dom = new \DomDocument();
+                                  // $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                                  // $images = $dom->getElementsByTagName('img');
+                                  // foreach($images as $k => $img){
+                                  //     $data = $img->getAttribute('src');
+                                  //     list($type, $data) = explode(';', $data);
+                                  //     list(, $data)      = explode(',', $data);
+                                  //     $data = base64_decode($data);
+                                  //     $image_name= "/upload/" . time().$k.'.png';
+                                  //
+                                  //     $path = public_path() . $image_name;
+                                  //
+                                  //     file_put_contents($path, $data);
+                                  //
+                                  //     $img->removeAttribute('src');
+                                  //
+                                  //     $img->setAttribute('src', $image_name);
+                                  // }
+                                  // $detail = $dom->saveHTML();
+
+
+
+                            //       $summernote = new About;
+                            //
+                            //       $summernote->body = $detail;
+                            //         $summernote->user_id = auth()->user()->id;
+                            // $summernote->title=$feature;
+                            //
+                            //       $summernote->save();
+
+
+
+               }
+
+               public function control(Request $request)
+               {
+                return view('pages.control');
+               }
+
 
 
 }

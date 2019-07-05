@@ -19,13 +19,16 @@ mix.styles([
     'public/lib/animate/animate.min.css',
     'public/lib/venobox/venobox.css',
     'public/lib/owlcarousel/assets/owl.carousel.min.css',
+    'public/libs/summernote/0.8.4/summernote.css',
     'public/css/style.css'
     ],
      'public/css/all.css');
 mix.scripts([
     'public/lib/jquery/jquery.min.js',
+    'public/lib/bootstrap/js/bootstrap.min.js',
     'public/lib/bootstrap/js/jquery.dataTables.min.js',
     'public/lib/bootstrap/js/dataTables.bootstrap4.min.js',
+    'public/libs/summernote/0.8.4/summernote.js',
    'public/lib/jquery/jquery-migrate.min.js',
    'public/lib/bootstrap/js/bootstrap.bundle.min.js',
    'public/lib/easing/easing.min.js',
