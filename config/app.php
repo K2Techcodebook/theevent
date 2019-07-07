@@ -162,6 +162,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Lakshmaji\Thumbnail\ThumbnailServiceProvider::class,
+        Pawlox\VideoThumbnail\VideoThumbnailServiceProvider::class,
+
 
         /*
          * Package Service Providers...
@@ -226,6 +229,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
        'Html' => Collective\Html\HtmlFacade::class,
+       'Thumbnail' => Lakshmaji\Thumbnail\Facade\Thumbnail::class,
+       'VideoThumbnail' => Pawlox\VideoThumbnail\Facade\VideoThumbnail::class,
 
     ],
 

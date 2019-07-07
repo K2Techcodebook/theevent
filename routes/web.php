@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\About;
+use App\Models\Service;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,11 +12,13 @@
 |
 */
 
-// Route::get('/', function () {
-//
-//     return view('welcome');
-// });
-Route::get('/', 'HomeController@welcomehome')->name('/');
+Route::get('/', function () {
+
+  $data = About::all();
+  $data2 = Service::all();
+  return view('welcome', compact('data',$data,'data2',$data2));
+});
+// Route::get('/', 'HomeController@welcomehome')->name('/');
 
 Auth::routes();
 

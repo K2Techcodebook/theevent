@@ -9,6 +9,8 @@ use App\Models\About;
 use App\Models\Service;
 use App\User;
 use DB;
+use Carbon\Carbon;
+use Thumbnail;
 use App\Http\Requests\VideoUploadRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -33,6 +35,11 @@ class HomeController extends Controller
    */
   public function index()
   {
+//     var_dump(getenv('PATH'));
+// var_dump(exec('which ffmpeg'));
+// var_dump(ini_get('open_basedir'));
+// var_dump(is_file(exec('which ffmpeg')));
+// var_dump(is_executable(exec('which ffmpeg')));
 
 return view('home');
   }
@@ -114,10 +121,18 @@ public function Update_video(Request $request){
              }else{
 
 
+
+            $timestamp        = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+              $file_name        = $timestamp;
                $videoName = $request['name'].'.'.request()->video->getClientOriginalExtension();
                 $videoPath = env('APP_URL').'/public/videos/'.$videoName;
-
+                 $destination_path =env('APP_URL').'/public/videos';
+//                  if (!Storage::exists($destination_path)) {
+//     Storage::makeDirectory($destination_path);
+// }
                 $file = $request->file('video');
+
+                VideoThumbnail::createThumbnail(public_path('files/movie.mp4'), public_path('files/thumbs/'), 'movie.jpg', 2, 1920, 1080);
                 if(isset($videoName)) {
                  $filename = $videoName;
                     $old_filename= $videoName;
@@ -135,6 +150,38 @@ public function Update_video(Request $request){
                    if ($update && $old_filename !== $filename) {
                        Storage::delete($old_filename);
                    }
+
+                  //    // file type is video
+                  //    // set storage path to store the file (image generated for a given video)
+                  //    $thumbnail_path   = storage_path().'/images';
+                  //
+                  //    $video_path       = $destination_path.'/'.$file_name;
+                  //
+                  //    // set thumbnail image name
+                  //    $thumbnail_image  = $request['name'].".jpg";
+                  //
+                  //    // set the thumbnail image "palyback" video button
+                  //    $water_mark       = storage_path().'/watermark/p.png';
+                  //
+                  //    // get video length and process it
+                  //    // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
+                  // //   $time_to_image    = floor(($data['video_length'])/2);
+                  // $time_to_image    = 34.6;
+                  //
+                  //    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,$time_to_image);
+                  //    if($thumbnail_status)
+                  //    {
+                  //      echo "Thumbnail generated";
+                  //    }
+                  //    else
+                  //    {
+                  //      echo "thumbnail generation has failed";
+                  //    }
+
+
+
+
+
                  }
 
                             $user['filename']       =$videoName;
@@ -236,5 +283,56 @@ public function Update_video(Request $request){
                 return view('welcome', compact('data',$data,'data2',$data2));
               }
 
+
+              public function testThumbnail()
+   {
+     // get file from input data
+     $file             = $this->request->file('file');
+
+     // get file type
+     $extension_type   = $file->getClientMimeType();
+
+     // set storage path to store the file (actual video)
+     $destination_path = storage_path().'/uploads';
+
+     // get file extension
+     $extension        = $file->getClientOriginalExtension();
+
+
+     $timestamp        = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+     $file_name        = $timestamp;
+
+     $upload_status    = $file->move($destination_path, $file_name);
+
+     if($upload_status)
+     {
+       // file type is video
+       // set storage path to store the file (image generated for a given video)
+       $thumbnail_path   = storage_path().'/images';
+
+       $video_path       = $destination_path.'/'.$file_name;
+
+       // set thumbnail image name
+       $thumbnail_image  = $fb_user_id.".".$timestamp.".jpg";
+
+       // set the thumbnail image "palyback" video button
+       $water_mark       = storage_path().'/watermark/p.png';
+
+       // get video length and process it
+       // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
+       $time_to_image    = floor(($data['video_length'])/2);
+
+
+       $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,$time_to_image);
+       if($thumbnail_status)
+       {
+         echo "Thumbnail generated";
+       }
+       else
+       {
+         echo "thumbnail generation has failed";
+       }
+     }
+   }
 
 }
