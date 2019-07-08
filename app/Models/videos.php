@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class videos extends Model
@@ -17,11 +18,18 @@ class videos extends Model
  * @var array
  */
         protected $fillable = [
-          'id','filename','url','extention','user_id'
+          'id','name','filename','url','extention','user_id','thumbnail'
         ];
 
         public function user(){
                 return $this->belongsTo('App\User');
         }
+
+        // public function getRouteKeyName()
+        // {
+        //     return 'slug';
+        // }
+
+
 
 }

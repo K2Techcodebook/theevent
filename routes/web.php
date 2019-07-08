@@ -55,6 +55,9 @@ Route::group(['middleware'=>'auth'], function () {
   	Route::get('control',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@control'])->name('control');
   // Route::post('summernoteeditor',array('as'=>'summernoteeditor.post',['middleware'=>'check-permission:superadmin','uses'=>'HomeController@postSummernoteeditor']));
 
+// super admin and validUser
+	Route::get('video/{id}-{slug}',['middleware'=>'check-permission:user|admin|superadmin','uses'=>'HomeController@viewVideo'])->name('video');
+
 
 
 

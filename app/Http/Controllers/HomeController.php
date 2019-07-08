@@ -41,8 +41,8 @@ class HomeController extends Controller
 // var_dump(ini_get('open_basedir'));
 // var_dump(is_file(exec('which ffmpeg')));
 // var_dump(is_executable(exec('which ffmpeg')));
-
-return view('home');
+$videos = videos::all();
+return view('home', compact('videos',$videos));
   }
 
   //update user profile
@@ -135,13 +135,12 @@ public function Update_video(Request $request){
                 $file = $request->file('video');
                $thumbvideoPath  = storage_path('/app/public/videos/').$videoName;
                       $video_path       = $destination_path.'/'.$file_name;
-                      $thumbnail_image  = $videoName.".jpg";
+                      $thumbnail_image  = $request['name'].".jpg";
                    //    if (!Storage::exists($thumbnail_path)) {
                    //     Storage::makeDirectory($thumbnail_path);
                    // }
-$thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_path,$thumbnail_image, 10);
 //$thumb = VideoThumbnail::createThumbnail(public_path('stories/videos/21530251287.mp4'), public_path("images/"), 'thumb.jpg', 2, 600, 600);
-
+//dd($thumbnail_status);
               //  VideoThumbnail::createThumbnail(public_path('files/movie.mp4'), public_path('files/thumbs/'), 'movie.jpg', 2, 1920, 1080);
                 if(isset($videoName)) {
                  $filename = $videoName;
@@ -160,6 +159,7 @@ $thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_p
                    if ($update && $old_filename !== $filename) {
                        Storage::delete($old_filename);
                    }
+                   $thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_path,$thumbnail_image, 10);
 
                   //    // file type is video
                   //    // set storage path to store the file (image generated for a given video)
@@ -193,8 +193,9 @@ $thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_p
 
 
                  }
-
+                            $user['thumbnail'] = $thumbnail_image;
                             $user['filename']       =$videoName;
+                            $user['name']       =$request['name'];
                             $user['created_at']  =date('Y-m-d h:i:s');
                             $user['updated_at']  =date('Y-m-d h:i:s');
                             $user['url']  =$videoPath;
@@ -289,61 +290,69 @@ $thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_p
                }
               public function welcomehome()
               {
+
                 $data = About::all();
                 $data2 = Service::all();
                 return view('welcome', compact('data',$data,'data2',$data2));
               }
 
-
-              public function testThumbnail()
-   {
-     // get file from input data
-     $file             = $this->request->file('file');
-
-     // get file type
-     $extension_type   = $file->getClientMimeType();
-
-     // set storage path to store the file (actual video)
-     $destination_path = storage_path().'/uploads';
-
-     // get file extension
-     $extension        = $file->getClientOriginalExtension();
+              public function viewVideo(Request $request)
+              {
+                  $data = videos::find($request->id);
+              
+                    return view('pages.video',compact('data',$data));
+              }
 
 
-     $timestamp        = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
-     $file_name        = $timestamp;
-
-     $upload_status    = $file->move($destination_path, $file_name);
-
-     if($upload_status)
-     {
-       // file type is video
-       // set storage path to store the file (image generated for a given video)
-       $thumbnail_path   = storage_path().'/images';
-
-       $video_path       = $destination_path.'/'.$file_name;
-
-       // set thumbnail image name
-       $thumbnail_image  = $fb_user_id.".".$timestamp.".jpg";
-
-       // set the thumbnail image "palyback" video button
-       $water_mark       = storage_path().'/watermark/p.png';
-
-       // get video length and process it
-       // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
-       $time_to_image    = floor(($data['video_length'])/2);
-
-
-       $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,$time_to_image);
-       if($thumbnail_status)
-       {
-         echo "Thumbnail generated";
-       }
-       else
-       {
-         echo "thumbnail generation has failed";
-       }
-     }
-   }
+   //            public function testThumbnail()
+   // {
+   //   // get file from input data
+   //   $file             = $this->request->file('file');
+   //
+   //   // get file type
+   //   $extension_type   = $file->getClientMimeType();
+   //
+   //   // set storage path to store the file (actual video)
+   //   $destination_path = storage_path().'/uploads';
+   //
+   //   // get file extension
+   //   $extension        = $file->getClientOriginalExtension();
+   //
+   //
+   //   $timestamp        = str_replace([' ', ':'], '-', Carbon::now()->toDateTimeString());
+   //   $file_name        = $timestamp;
+   //
+   //   $upload_status    = $file->move($destination_path, $file_name);
+   //
+   //   if($upload_status)
+   //   {
+   //     // file type is video
+   //     // set storage path to store the file (image generated for a given video)
+   //     $thumbnail_path   = storage_path().'/images';
+   //
+   //     $video_path       = $destination_path.'/'.$file_name;
+   //
+   //     // set thumbnail image name
+   //     $thumbnail_image  = $fb_user_id.".".$timestamp.".jpg";
+   //
+   //     // set the thumbnail image "palyback" video button
+   //     $water_mark       = storage_path().'/watermark/p.png';
+   //
+   //     // get video length and process it
+   //     // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
+   //     $time_to_image    = floor(($data['video_length'])/2);
+   //
+   //
+   //     $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,$time_to_image);
+   //     if($thumbnail_status)
+   //     {
+   //       echo "Thumbnail generated";
+   //     }
+   //     else
+   //     {
+   //       echo "thumbnail generation has failed";
+   //     }
+   //   }
+   // }
 
 }
