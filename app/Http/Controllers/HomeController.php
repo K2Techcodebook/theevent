@@ -11,6 +11,7 @@ use App\User;
 use DB;
 use Carbon\Carbon;
 use Thumbnail;
+use VideoThumbnail;
 use App\Http\Requests\VideoUploadRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -126,73 +127,88 @@ public function Update_video(Request $request){
               $file_name        = $timestamp;
                $videoName = $request['name'].'.'.request()->video->getClientOriginalExtension();
                 $videoPath = env('APP_URL').'/public/videos/'.$videoName;
-                 $destination_path =env('APP_URL').'/public/videos';
+                 $destination_path =env('APP_URL').'/public/videos/thumbs';
+                        //$destination_path =env('APP_URL').'/public/videos';
 //                  if (!Storage::exists($destination_path)) {
 //     Storage::makeDirectory($destination_path);
 // }
+
+                $image_name= '/img/thumbs/';
+
+                $path = public_path() . $image_name;
                 $file = $request->file('video');
+$thumbnail_status = VideoThumbnail::createThumbnail($videoName,$path, 'movie.jpg', 2, 1920, 1080);
+//dd($thumbnail_status);
+   if($thumbnail_status)
+   {
+     echo "Thumbnail generated            ".$thumbnail_status->thumbName;
+   }
+   else
+   {
+     echo "thumbnail generation has failed";
+   }
+              // // //  VideoThumbnail::createThumbnail(public_path('files/movie.mp4'), public_path('files/thumbs/'), 'movie.jpg', 2, 1920, 1080);
+              // //   if(isset($videoName)) {
+              // //    $filename = $videoName;
+              // //       $old_filename= $videoName;
+              // //    //  $filename = $request['username'] . '-' . $user->id . '.jpg';
+              // //     // $old_filename = $old_name . '-' . $user->id . '.jpg';
+              // //      $update = false;
+              // //      if (Storage::disk('public')->has($old_filename)) {
+              // //          $old_file = Storage::disk('public')->get($old_filename);
+              // //          Storage::disk('public')->put($filename, $old_file);
+              // //          $update = true;
+              // //      }
+              // //      if ($file) {
+              // //          Storage::disk('public')->put($filename, File::get($file));
+              // //      }
+              // //      if ($update && $old_filename !== $filename) {
+              // //          Storage::delete($old_filename);
+              // //      }
+              // //
+              // //     //    // file type is video
+              // //     //    // set storage path to store the file (image generated for a given video)
+              // //     //    $thumbnail_path   = storage_path().'/images';
+              // //     //
+              // //     //    $video_path       = $destination_path.'/'.$file_name;
+              // //     //
+              // //     //    // set thumbnail image name
+              // //     //    $thumbnail_image  = $request['name'].".jpg";
+              // //     //
+              // //     //    // set the thumbnail image "palyback" video button
+              // //     //    $water_mark       = storage_path().'/watermark/p.png';
+              // //     //
+              // //     //    // get video length and process it
+              // //     //    // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
+              // //     // //   $time_to_image    = floor(($data['video_length'])/2);
+              // //     // $time_to_image    = 34.6;
+              // //     //
+              // //     //    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,$time_to_image);
+              // //     //    if($thumbnail_status)
+              // //     //    {
+              // //     //      echo "Thumbnail generated";
+              // //     //    }
+              // //     //    else
+              // //     //    {
+              // //     //      echo "thumbnail generation has failed";
+              // //     //    }
+              // //
+              // //
+              // //
+              // //
+              // //
+              // //    }
+              //
+              //               $user['filename']       =$videoName;
+              //               $user['created_at']  =date('Y-m-d h:i:s');
+              //               $user['updated_at']  =date('Y-m-d h:i:s');
+              //               $user['url']  =$videoPath;
+              //               $user['extention']  =request()->video->getClientOriginalExtension();
+              //               $user['user_id']     =auth()->user()->id;
+              //              DB::table('videos')->insert($user);
 
-                VideoThumbnail::createThumbnail(public_path('files/movie.mp4'), public_path('files/thumbs/'), 'movie.jpg', 2, 1920, 1080);
-                if(isset($videoName)) {
-                 $filename = $videoName;
-                    $old_filename= $videoName;
-                 //  $filename = $request['username'] . '-' . $user->id . '.jpg';
-                  // $old_filename = $old_name . '-' . $user->id . '.jpg';
-                   $update = false;
-                   if (Storage::disk('public')->has($old_filename)) {
-                       $old_file = Storage::disk('public')->get($old_filename);
-                       Storage::disk('public')->put($filename, $old_file);
-                       $update = true;
-                   }
-                   if ($file) {
-                       Storage::disk('public')->put($filename, File::get($file));
-                   }
-                   if ($update && $old_filename !== $filename) {
-                       Storage::delete($old_filename);
-                   }
-
-                  //    // file type is video
-                  //    // set storage path to store the file (image generated for a given video)
-                  //    $thumbnail_path   = storage_path().'/images';
-                  //
-                  //    $video_path       = $destination_path.'/'.$file_name;
-                  //
-                  //    // set thumbnail image name
-                  //    $thumbnail_image  = $request['name'].".jpg";
-                  //
-                  //    // set the thumbnail image "palyback" video button
-                  //    $water_mark       = storage_path().'/watermark/p.png';
-                  //
-                  //    // get video length and process it
-                  //    // assign the value to time_to_image (which will get screenshot of video at that specified seconds)
-                  // //   $time_to_image    = floor(($data['video_length'])/2);
-                  // $time_to_image    = 34.6;
-                  //
-                  //    $thumbnail_status = Thumbnail::getThumbnail($video_path,$thumbnail_path,$thumbnail_image,$time_to_image);
-                  //    if($thumbnail_status)
-                  //    {
-                  //      echo "Thumbnail generated";
-                  //    }
-                  //    else
-                  //    {
-                  //      echo "thumbnail generation has failed";
-                  //    }
-
-
-
-
-
-                 }
-
-                            $user['filename']       =$videoName;
-                            $user['created_at']  =date('Y-m-d h:i:s');
-                            $user['updated_at']  =date('Y-m-d h:i:s');
-                            $user['url']  =$videoPath;
-                            $user['extention']  =request()->video->getClientOriginalExtension();
-                            $user['user_id']     =auth()->user()->id;
-                           DB::table('videos')->insert($user);
-                          $message ='Account has been successfully updated!';
-                        return redirect()->back()->with('status', $message);
+                        //   $message ='Account has been successfully updated!';
+                        // return redirect()->back()->with('status', $message);
                     }
 }
 
