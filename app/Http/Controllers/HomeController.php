@@ -133,15 +133,20 @@ public function Update_video(Request $request){
 //     Storage::makeDirectory($destination_path);
 // }
 
-                $image_name= '/img/thumbs/';
+                $image_name= '/thumbs';
 
-                $path = public_path() . $image_name;
+                $thumbnail_path = public_path() . $image_name;
                 $file = $request->file('video');
-$thumbnail_status = VideoThumbnail::createThumbnail($videoName,$path, 'movie.jpg', 2, 1920, 1080);
-//dd($thumbnail_status);
+
+                    //  $thumbnail_path   = storage_path().'/thumbs';
+                      $video_path       = $destination_path.'/'.$file_name;
+                      $thumbnail_image  = $videoName.".jpg";
+$thumbnail_status = VideoThumbnail::createThumbnail($videoPath,$thumbnail_path,$thumbnail_image, 10);
+//$thumb = VideoThumbnail::createThumbnail(public_path('stories/videos/21530251287.mp4'), public_path("images/"), 'thumb.jpg', 2, 600, 600);
+dd($thumbnail_status);
    if($thumbnail_status)
    {
-     echo "Thumbnail generated            ".$thumbnail_status->thumbName;
+     echo "Thumbnail generated            ";
    }
    else
    {
