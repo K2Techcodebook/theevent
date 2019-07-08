@@ -127,21 +127,22 @@ public function Update_video(Request $request){
               $file_name        = $timestamp;
                $videoName = $request['name'].'.'.request()->video->getClientOriginalExtension();
                 $videoPath = env('APP_URL').'/public/videos/'.$videoName;
-                 $destination_path =env('APP_URL').'/public/videos/thumbs';
+                 $destination_path =env('APP_URL').'/public/videos';
                         //$destination_path =env('APP_URL').'/public/videos';
-//                  if (!Storage::exists($destination_path)) {
-//     Storage::makeDirectory($destination_path);
-// }
 
-                $image_name= '/thumbs';
 
-                $thumbnail_path = public_path() . $image_name;
+              $thumbnail_path=storage_path().'/thumbs';
+
+              //  $thumbnail_path = public_path() . $image_name;
                 $file = $request->file('video');
 
-                    //  $thumbnail_path   = storage_path().'/thumbs';
+               $thumbvideoPath  = storage_path('app/public/videos/').$videoName;
                       $video_path       = $destination_path.'/'.$file_name;
                       $thumbnail_image  = $videoName.".jpg";
-$thumbnail_status = VideoThumbnail::createThumbnail($videoPath,$thumbnail_path,$thumbnail_image, 10);
+                      if (!Storage::exists($thumbnail_path)) {
+                       Storage::makeDirectory($thumbnail_path);
+                   }
+$thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_path,$thumbnail_image, 10);
 //$thumb = VideoThumbnail::createThumbnail(public_path('stories/videos/21530251287.mp4'), public_path("images/"), 'thumb.jpg', 2, 600, 600);
 dd($thumbnail_status);
    if($thumbnail_status)
