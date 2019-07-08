@@ -131,17 +131,17 @@ public function Update_video(Request $request){
                         //$destination_path =env('APP_URL').'/public/videos';
 
 
-              $thumbnail_path=storage_path().'/thumbs';
+              $thumbnail_path=storage_path().'/app/public/thumbs';
 
               //  $thumbnail_path = public_path() . $image_name;
                 $file = $request->file('video');
 
-               $thumbvideoPath  = storage_path('app/public/videos/').$videoName;
+               $thumbvideoPath  = storage_path('/app/public/videos/').$videoName;
                       $video_path       = $destination_path.'/'.$file_name;
                       $thumbnail_image  = $videoName.".jpg";
-                      if (!Storage::exists($thumbnail_path)) {
-                       Storage::makeDirectory($thumbnail_path);
-                   }
+                   //    if (!Storage::exists($thumbnail_path)) {
+                   //     Storage::makeDirectory($thumbnail_path);
+                   // }
 $thumbnail_status = VideoThumbnail::createThumbnail($thumbvideoPath,$thumbnail_path,$thumbnail_image, 10);
 //$thumb = VideoThumbnail::createThumbnail(public_path('stories/videos/21530251287.mp4'), public_path("images/"), 'thumb.jpg', 2, 600, 600);
 dd($thumbnail_status);
