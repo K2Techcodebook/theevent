@@ -26,7 +26,7 @@
                   @foreach($data as $item)
              <div class="col-lg-6">
                <h2>About {{$item->title }}</h2>
-               <p>{{ $item->body }}</p>
+               <p>{{strip_tags($item->body)}}</p>
              </div>
                 @endforeach
              <!-- <div class="col-lg-3">
