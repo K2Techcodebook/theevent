@@ -1,6 +1,7 @@
 <?php
 use App\Models\About;
 use App\Models\Service;
+use App\Models\upevent;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +16,9 @@ use App\Models\Service;
 Route::get('/', function () {
 
   $data = About::all();
+  $data3 = upevent::all();
   $data2 = Service::all();
-  return view('welcome', compact('data',$data,'data2',$data2));
+  return view('welcome', compact('data',$data,'data2',$data2,'data3',$data3));
 });
 // Route::get('/', 'HomeController@welcomehome')->name('/');
 

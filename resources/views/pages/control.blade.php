@@ -86,11 +86,16 @@
     <option value="">-- Select Your Ticket Type --</option>
     <option value="service">Service</option>
     <option value="about">About</option>
+      <option value="upevnet">Upcoming Event</option>
   </select>
 </div>
       <div class="form-group">
+ <label for="usr">Time for Event:</label>
+ <input type="text" class="form-control" name="time" placeholder="10:00AM">
+</div>
+<div class="form-group">
  <label for="usr">Title of Feature:</label>
- <input type="text" class="form-control" name="feature">
+ <input type="text" class="form-control" name="feature" placeholder="Title">
 </div>
        <div class="form-group">
            <strong>Details:</strong>

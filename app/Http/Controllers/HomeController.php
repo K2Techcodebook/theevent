@@ -9,6 +9,7 @@ use App\Models\About;
 use App\Models\Service;
 use App\User;
 use DB;
+use App\Models\upevent;
 use Carbon\Carbon;
 use Thumbnail;
 use VideoThumbnail;
@@ -214,6 +215,7 @@ public function Update_video(Request $request){
                            'feature' => 'required',
                        ]);
                        $detail=$request->input('detail');
+                        $time=$request->input('time');
                  $feature=$request->input('feature');
                           if($request->input('ticket-type') == 'about'){
 
@@ -221,6 +223,16 @@ public function Update_video(Request $request){
                               ['title' => $feature,'user_id'=>auth()->user()->id, 'body' => $detail]);
                               $message ='Account has been successfully updated!';
                             return redirect()->back()->with('status', $message);
+                          }
+                          elseif ($request->input('ticket-type') == 'upevnet') {
+                            $this->validate($request, [
+
+                                      'time'    => 'required',
+                                  ]);
+                            $user = upevent::updateOrCreate(['title' => $feature],
+                              ['title' => $feature,'time' => $time,'user_id'=>auth()->user()->id, 'body' =>$detail]);
+                            $message ='Account has been successfully updated!';
+                          return redirect()->back()->with('status', $message);
                           }
                           else {
                             $dom = new \DomDocument();
@@ -299,7 +311,7 @@ public function Update_video(Request $request){
               public function viewVideo(Request $request)
               {
                   $data = videos::find($request->id);
-              
+
                     return view('pages.video',compact('data',$data));
               }
 
