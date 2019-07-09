@@ -108,7 +108,7 @@
                  <div class="col-md-2"><time>{{$item->time }}</time></div>
                  <div class="col-md-10">
                    <h4>{{$item->title }}</h4>
-                   <p>{{$item->body}}</p>
+                   <p>{{strip_tags($item->body)}}</p>
                  </div>
                </div>
             @endforeach
