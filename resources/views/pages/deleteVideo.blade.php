@@ -47,6 +47,7 @@
        						<th class="text-center">Extention</th>
        						<th class="text-center">Upload By</th>
                   <th class="text-center">Date</th>
+                    <th class="text-center">Action</th>
        					</tr>
        				</thead>
        				@foreach($data as $item)

@@ -8,7 +8,39 @@
 
   @if(checkPermission(['user']))
 
+  <!--==========================
+    Speakers Section
+  ============================-->
+  <section id="speakers" class="wow fadeInUp">
+    <div class="container">
+      <div class="section-header">
+        <h2>Services</h2>
+        <p>Here are some of our speakers</p>
+      </div>
 
+      <div class="row">
+          @foreach($videos as $item)
+          <?php $name=Str_slug($item->name);?>
+        <div class="col-lg-4 col-md-6">
+          <div class="speaker">
+          <a href="{{route('video',['id'=>$item->id,'name'=>$name])}}">  <img src="{{ url('storage/thumbs/'.$item->thumbnail)}}" alt="Speaker 1" class="img-fluid"></a>
+            <div class="details">
+              <h3><a href="speaker-details.html">{{$item->name}}</a></h3>
+              <!-- <p>Quas alias incidunt</p> -->
+              <div class="social">
+                <a href=""><i class="fa fa-twitter"></i></a>
+                <a href=""><i class="fa fa-facebook"></i></a>
+                <a href=""><i class="fa fa-google-plus"></i></a>
+                <a href=""><i class="fa fa-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+       @endforeach
+      </div>
+    </div>
+
+  </section>
 
   @elseif(checkPermission(['admin']))
 
