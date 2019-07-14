@@ -13,12 +13,29 @@
      <h2> {{ __('Login') }} to your Account</h2>
     </div>
 
+    <div class="col-lg-10 col-lg-offset-2">
+                    @if (session('status'))
 
+                                  <div class="alert alert-success">
+                                      {{ session('status') }}
+                                  </div>
+                              @endif
+                              @if (count($errors) > 0)
+                                  @foreach ($errors->all() as $error)
+
+                                      <div class="alert alert-danger">{{ $error }}</div>
+
+                                  @endforeach
+
+                              @endif
+
+
+                    </div>
     <div class="form">
-   <form method="POST" action="{{ route('login') }}">
+   <form method="POST" action="{{ url('/login') }}">
       @csrf
       <div class="form-group">
-        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Enter your Email here.." required autofocus>
+        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Enter your Email here.." >
         @if ($errors->has('email'))
         <span class="invalid-feedback" role="alert">
           <strong>{{ $errors->first('email') }}</strong>
@@ -26,7 +43,7 @@
         @endif
       </div>
 <div class="form-group">
-        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Enter your password here..." required>
+        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Enter your password here..." >
         @if ($errors->has('password'))
         <span class="invalid-feedback" role="alert">
           <strong>{{ $errors->first('password') }}</strong>

@@ -31,13 +31,14 @@ Route::get('/clear-cache', function() {
    $exitCode =  Illuminate\Support\Facades\Artisan::call('cache:clear');
     $exitCode = Illuminate\Support\Facades\Artisan::call('route:clear');
     $exitCode = Illuminate\Support\Facades\Artisan::call('config:clear');
+   $exitCode = Illuminate\Support\Facades\Artisan::call('view:clear');
     return $exitCode;
     // return what you want
 });
 
 Route::post('/register_new_user', 'Auth\RegisterController@createAffiliate')->name('register_new_user');
 
-Route::post('/login', 'Auth\LoginController@affiliateLogin')->name('log_affiliate');
+Route::post('/login', 'Auth\LoginController@affiliateLogin');
 
 
 

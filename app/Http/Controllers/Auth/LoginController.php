@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
     use Illuminate\Http\Request;
     use Auth;
+    use App\User;
 
 
 class LoginController extends Controller
@@ -44,25 +45,33 @@ class LoginController extends Controller
     public function affiliateLogin(Request $request)
     {
         $this->validate($request, [
-               'username' => ['required', 'string', 'max:255'],
+               'email' => ['required', 'string', 'max:255'],
               'password' => ['required', 'string', 'min:6']
         ]);
 
-        if (Auth::guard('users')->attempt(['username' => $request->username, 'password' => $request->password], $request->get('remember'))) {
+        if (Auth::guard('users')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember')))
+        {
+if(Auth::user()->is_permission == 0)
+{
+   return redirect()->intended(route('package'));
+}else {
+  // return redirect()->intended(route('package'));
+  return redirect()->intended(route('dashboard'));
+}
 
-           return redirect()->intended(route('dashboard'));
+
         }
          $message ='Login Details Incorrect Plsease Check Again!';
-        return back()->withInput($request->only('aemail', 'remember'))->with('status', $message);
+        return back()->withInput($request->only('email', 'remember'))->with('status', $message);
     }
 
         public function logout(Request $request)
-    {
-        $this->guard()->logout();
+            {
+                $this->guard()->logout();
 
-        $request->session()->invalidate();
+                $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/');
-    }
+                return $this->loggedOut($request) ?: redirect('/');
+            }
 
 }
