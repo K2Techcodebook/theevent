@@ -1,3 +1,12 @@
+// if(Auth::user()->is_permission == 0)
+// {
+//    return redirect()->intended(route('package'));
+// }else {
+//   // return redirect()->intended(route('package'));
+//   return redirect()->intended(route('dashboard'));
+// }
+
+
 <div id="product-sideshow-wrap">
         <div id="product-sideshow">
             <!-- PRODUCT SHOWCASE -->

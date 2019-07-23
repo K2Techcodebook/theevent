@@ -60,9 +60,12 @@ if(Auth::user()->is_permission == 0)
 }
 
 
-        }
+        }else
+        {
          $message ='Login Details Incorrect Plsease Check Again!';
-        return back()->withInput($request->only('email', 'remember'))->with('status', $message);
+         return back()->withInput($request->only('email', 'remember'))->with('status', $message);
+        }
+        
     }
 
         public function logout(Request $request)

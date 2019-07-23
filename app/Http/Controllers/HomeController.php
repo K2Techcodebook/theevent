@@ -42,8 +42,9 @@ class HomeController extends Controller
 // var_dump(ini_get('open_basedir'));
 // var_dump(is_file(exec('which ffmpeg')));
 // var_dump(is_executable(exec('which ffmpeg')));
+    $user_details = Auth::user();
 $videos = videos::all();
-return view('home', compact('videos',$videos));
+return view('home', compact('videos',$videos,'user_details',$user_details));
   }
 
   //update user profile

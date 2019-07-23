@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\user_profiles;
 use App\User;
+use Mail;
+use URL;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +35,7 @@ class RegisterController extends Controller
     //
     protected function createAffiliate(Request $request)
     {
+    $linkee=URL::route('package');  $message="welcome oooooooooooooooo";
            $this->validate($request, [
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -40,6 +43,12 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:6', 'confirmed'],
 
         ]);
+        $data = array(
+          'link'=>$linkee,
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'messagetext'=>$message
+            );
 
     //    user_profiles::create([
     //              'user_id' => $user_id,
@@ -52,27 +61,43 @@ class RegisterController extends Controller
 
 
     //is_permission
-    
+
 //Note Admin 1
 // Super admin 2
 //User 3
 //Invalid user 0
+Mail::send('contacttext', $data, function ($message) use ($request){
+    /* Config ********** */
+    $to_email = $request['email'];
+    $to_name  = $request['name'];
+    $subject  = "Welcome To Lextv";
+    $message->subject ($subject);
+    $message->from ("info@lexatv.org");
+    $message->to ($to_email, $to_name);
+});
+if(count(Mail::failures()) > 0){
+    $message ='Post has been successfully added!';
+        return redirect()->intended('register')->with('status', $message);
+} else {
+  User::create([
+        //   'user_id' => $user_id,
+           'username' => $request['username'],
+           'email' => $request['email'],
+           'name' => $request['name'],
+            'ip_address' =>  request()->ip(),
+           'password' => Hash::make($request['password']),
+           'is_permission'  => 0,
+           'token_balance' =>  0,
 
-          User::create([
-                //   'user_id' => $user_id,
-                   'username' => $request['username'],
-                   'email' => $request['email'],
-                   'name' => $request['name'],
-                    'ip_address' =>  request()->ip(),
-                   'password' => Hash::make($request['password']),
-                   'is_permission'  => 0,
-                   'token_balance' =>  0,
-
-               ]);
+       ]);
 
 
-             return redirect()->intended('login');
+     return redirect()->intended('login');
+}
+
 
 
     }
+
+
 }
